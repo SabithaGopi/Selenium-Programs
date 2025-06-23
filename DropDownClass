@@ -1,0 +1,45 @@
+package SeleniumSession;
+
+import java.time.Duration;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.Select;
+
+public class DropDownClass {
+	
+	WebDriver driver;
+	
+	public static void main(String[]args) throws InterruptedException
+	{
+		
+		WebDriver dr = new ChromeDriver();
+		dr.get("https://www.facebook.com/");
+		dr.manage().window().maximize();
+		dr.manage().timeouts().implicitlyWait(Duration.ofSeconds(40));
+		Thread.sleep(2000);
+		dr.findElement(By.xpath("//a[@data-testid='open-registration-form-button']")).click();
+	
+		
+		WebElement month = dr.findElement(By.cssSelector("#month"));
+		Select s1 = new Select(month);
+		s1.selectByIndex(3);
+		Thread.sleep(2000);
+		s1.selectByValue("8");
+		Thread.sleep(2000);
+		s1.selectByVisibleText("Dec");
+		Thread.sleep(2000);
+		month.sendKeys("Jan");
+		
+		
+		
+		
+			
+		
+		
+	}
+	
+
+}
