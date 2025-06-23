@@ -1,0 +1,53 @@
+package SeleniumSession;
+
+import java.time.Duration;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
+
+public class ActionsHandles {
+	
+	WebDriver driver;
+	public static void main(String[] args) throws InterruptedException
+{
+
+		WebDriver dr = new ChromeDriver();
+	  dr.get("https://www.scotiabank.com/ca/en/personal.html");
+	    dr.manage().window().maximize();
+		dr.manage().timeouts().implicitlyWait(Duration.ofSeconds(40));
+		Thread.sleep(2000);
+		
+		WebElement cc = dr.findElement(By.xpath("//span[text()='Credit Cards']"));
+		WebElement cbcc = dr.findElement(By.xpath("//span[text()='Cash back credit cards']"));
+		
+		Actions ac = new Actions(dr);
+		ac.moveToElement(cc).moveToElement(cbcc).click().perform();
+		
+
+		WebElement search = dr.findElement(By.cssSelector("#header__search"));
+		ac.sendKeys(search,"Auto").perform();
+		ac.keyDown(Keys.SHIFT)
+		.sendKeys(" card")
+		.keyUp(Keys.SHIFT)
+		.sendKeys(Keys.ENTER)
+		//.pause(Duration.ofSeconds(10))
+		.perform();
+		
+		cc = dr.findElement(By.xpath("//span[text()='Credit Cards']"));
+		cbcc = dr.findElement(By.xpath("//span[text()='Cash back credit cards']"));
+		
+		ac.moveToElement(cc)
+		.moveToElement(cbcc)
+		.click().perform();
+		
+		
+		
+		
+		
+}
+
+}
