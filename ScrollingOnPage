@@ -1,0 +1,41 @@
+package SeleniumSession;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
+
+public class ScrollingOnPage {
+
+	public static void main(String []args) throws InterruptedException {
+		
+		
+		WebDriver dr = new ChromeDriver();
+		dr.get("https://toolsqa.com/");
+		dr.manage().window().maximize();
+		
+		
+		//Dimension d = new Dimension(375, 667);
+				//dr.manage().window().setSize(d);
+		
+		JavascriptExecutor j = (JavascriptExecutor)dr;
+		j.executeScript("window.scrollTo(0,800)", "");
+		Thread.sleep(2000);
+		
+		
+		j.executeScript("window.scrollBy(0,800)", "");
+		WebElement sel = dr.findElement(By.xpath("//a[text()='Selenium']"));
+		//j.executeScript("arguments[0].scrollIntoView(false);", sel);
+				//j.executeScript("arguments[0].click();", sel);
+		
+		
+		Actions ac = new Actions(dr);
+		ac.scrollToElement(sel).perform();
+		j.executeScript("window.scrollBy(0,300)", "");
+		ac.click(sel).perform();
+			
+		
+	}	
+	
+}
