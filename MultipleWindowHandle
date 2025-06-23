@@ -1,0 +1,84 @@
+package SeleniumSession;
+import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WindowType;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class MultipleWindowHandling {
+
+   public static void main(String[] args) throws InterruptedException {
+	   
+	   WebDriver dr = new ChromeDriver();
+		dr.get("https://www.facebook.com/");
+		dr.manage().window().maximize();
+		dr.manage().timeouts().implicitlyWait(Duration.ofSeconds(40));
+		Thread.sleep(2000);
+		
+		dr.findElement(By.xpath("//a[@title='Check out Instagram']")).click();
+		dr.findElement(By.cssSelector("a[title='Learn more about Meta Quest']")).click();
+		
+		
+		Set<String>handle = dr.getWindowHandles();
+		System.out.println(handle);
+		List<String>ahandle = new ArrayList<String>(handle);
+		System.out.println(ahandle);
+		String fb = null;
+		String mq = null;
+		String inst = null;
+		
+		for(String s:ahandle)
+		{
+			dr.switchTo().window(s);
+			String title = dr.getTitle();
+			System.out.println(title);
+			Thread.sleep(2000);
+			
+			if(title.contains("Facebook")) 
+			{
+				fb=s;
+			}else if(title.contains("Instagram"))
+			{
+				inst=s;
+			}else if(title.contains("Meta Quest"))
+			{
+				mq=s;
+			}
+			
+		}
+		
+		dr.switchTo().window(mq);
+		dr.findElement(By.xpath("//a[@role='link']/span[text()='About Meta']")).click();
+		
+		dr.switchTo().window(inst);
+		dr.findElement(By.xpath("//*[@name='username']")).sendKeys("123456789");
+		
+		dr.switchTo().window(fb);
+		dr.findElement(By.name("email")).sendKeys("12345678");
+		
+		
+		
+		dr.switchTo().newWindow(WindowType.TAB);
+		dr.navigate().to("http://www.google.com");
+		String gg=dr.getWindowHandle();
+		
+		dr.switchTo().window(inst);
+		dr.findElement(By.xpath("//*[@name='username']")).sendKeys("09866");
+		
+		dr.switchTo().window(gg);
+		dr.close();
+		
+		dr.switchTo().window(inst);
+		dr.findElement(By.xpath("//*[@name='username']")).sendKeys("0987687");
+		//dr.quit();		
+		
+		}
+			   
+	     }
+	
+	
+
