@@ -1,0 +1,59 @@
+package SeleniumSession;
+import java.time.Duration;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
+
+
+
+public class RadioButtonCheckBox {
+	
+
+	public static void main(String[] args) throws InterruptedException {
+		// TODO Auto-generated method stub
+		
+		WebDriver dr = new ChromeDriver();
+		dr.get("https://demoqa.com/automation-practice-form");
+		dr.manage().window().maximize();
+		dr.manage().timeouts().implicitlyWait(Duration.ofSeconds(120));
+		Thread.sleep(2000);
+
+		
+		
+		WebElement radio = dr.findElement(By.cssSelector("#gender-radio-1"));
+		
+	boolean b = radio.isSelected();
+	System.out.println(b);
+	
+	
+	if(b==false)
+	{
+		//radio.click();
+		//((JavascriptExecutor)d).executeScript("arguments[0].click();", radio);
+		new Actions(dr).click(radio).perform();
+		b = radio.isSelected();
+		System.out.println(b);
+		
+	}
+	
+	WebElement check = dr.findElement(By.cssSelector("#hobbies-checkbox-2"));
+	boolean c = check.isSelected();
+	System.out.println(c);
+	if(c==false)
+	{
+		//radio.click();
+		//((JavascriptExecutor)d).executeScript("arguments[0].click();", radio);
+		new Actions(dr).scrollToElement(check).perform();
+		((JavascriptExecutor)dr).executeScript("window.scrollBy(0,300)", "");
+		new Actions(dr).click(check).perform();
+		c = check.isSelected();
+		System.out.println(c);
+		
+	}
+				
+	}
+
+}
